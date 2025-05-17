@@ -5,13 +5,74 @@
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
             <h3 class="fw-bold mb-3">Transaksi Uang Keluar</h3>
         </div>
+         <div class="row">
+            <div class="col-sm-6 col-md-4">
+                <div class="card card-stats card-round">
+                    <div class="card-body ">
+                        <div class="row align-items-center">
+                            <div class="col-icon">
+                                <div class="icon-big text-center icon-primary bubble-shadow-small">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                            </div>
+                            <div class="col col-stats ms-3 ms-sm-0">
+                                <div class="numbers">
+                                    <p class="card-category">Total Keuangan</p>
+                                    <h4 class="card-title">RP {{ number_format($totalKeuangan, 0, ',', '.') }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="card card-stats card-round">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-icon">
+                                <div class="icon-big text-center icon-info bubble-shadow-small">
+                                    <i class="fas fa-user-check"></i>
+                                </div>
+                            </div>
+                            <div class="col col-stats ms-3 ms-sm-0">
+                                <div class="numbers">
+                                    <p class="card-category">Uang Masuk</p>
+                                    <h4 class="card-title">RP {{ number_format($UangMasuk, 0, ',', '.') }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="card card-stats card-round">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-icon">
+                                <div class="icon-big text-center icon-success bubble-shadow-small">
+                                    <i class="fas fa-luggage-cart"></i>
+                                </div>
+                            </div>
+                            <div class="col col-stats ms-3 ms-sm-0">
+                                <div class="numbers">
+                                    <p class="card-category">Uang Keluar</p>
+                                    <h4 class="card-title">RP {{ number_format($UangKeluar, 0, ',', '.') }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-round">
                     <div class="card-header">
                         <div class="card-head-row card-tools-still-right">
                             <div class="btn-group">
-                                <a href="" class="btn btn-primary">Tambah Transaksi</a>
+                               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTransaksi">
+                            Tambah Transaksi
+                            </button>
                             </div>
                         </div>
                     </div>
@@ -23,62 +84,40 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
+                                                <th>Kode Transaksi</th>
+                                                <th>Tanggal</th>
+                                                <th>Kategori</th>
                                                 <th>Nama Transaksi</th>
-                                                <th>Kategori Transaksi</th>
-                                                <th>Transaksi Saldo</th>
-                                                <th>Tanggal Transkasi</th>
+                                                <th>Jumlah Rp.</th>
+                                                <th>Keterangan</th>
+                                                <th>Diinput oleh</th>
                                                 <th class="text-center">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @foreach($data as $key => $item)
                                             <tr>
-                                                <td>1</td>
-                                                <td>Donasi Pembangunan</td>
-                                                <td>Donasi</td>
-                                                <td>Rp 5.000.000</td>
-                                                <td>2025-04-10</td>
-                                                <td class="text-center"><a href="#">Lihat</a></td>
+                                                <td>{{$key + 1}}</td>
+                                                <td>{{$item->kode_transaksi}}</td>
+                                                <td>{{$item->tanggal}}</td>
+                                                <td>{{$item->kategori->nama_kategori}}</td>
+                                                <td>{{$item->nama_transaksi}}</td>
+                                                <td>{{ number_format($item->jumlah, 0, ',', '.') }}</td>
+                                                <td>{{$item->keterangan ?? '--'}}</td>
+                                                <td>{{$item->user->name}}</td>
+                                                <td>
+                                                     <div class="btn-group">
+                                                        <button type="button"
+                                                        class="btn btn-warning btn-sm"
+                                                        onclick="editTransaksi({{ $item->id }})">
+                                                        Edit
+                                                        </button>
+                                                        @method('DELETE')
+                                                        <a href="{{route('admin.uangkeluar.destroy', $item->id)}}" class="btn btn-sm btn-danger" data-confirm-delete="true">Hapus</a>
+                                                    </div>
+                                                </td>
                                             </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Pembelian ATK</td>
-                                                <td>Operasional</td>
-                                                <td>Rp 750.000</td>
-                                                <td>2025-04-12</td>
-                                                <td class="text-center"><a href="#">Lihat</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>SPP Bulan April</td>
-                                                <td>SPP</td>
-                                                <td>Rp 350.000</td>
-                                                <td>2025-04-01</td>
-                                                <td class="text-center"><a href="#">Lihat</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>Pemasukan dari Kantin</td>
-                                                <td>Usaha Sekolah</td>
-                                                <td>Rp 2.000.000</td>
-                                                <td>2025-04-14</td>
-                                                <td class="text-center"><a href="#">Lihat</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td>Perbaikan AC Kelas</td>
-                                                <td>Perawatan</td>
-                                                <td>Rp 1.200.000</td>
-                                                <td>2025-04-09</td>
-                                                <td class="text-center"><a href="#">Lihat</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>6</td>
-                                                <td>Perbaikan AC Kelas</td>
-                                                <td>Perawatan</td>
-                                                <td>Rp 1.200.000</td>
-                                                <td>2025-04-09</td>
-                                                <td class="text-center"><a href="#">Lihat</a></td>
-                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -92,11 +131,14 @@
 </div>
 @endsection
 
+
+@include('Admin.Transaksi.Uang-Keluar.add')
+@include('Admin.Transaksi.Uang-Keluar.edit')
+
 @push('scripts')
 <!-- jQuery & DataTables JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
 
 <script>
     $(document).ready(function () {
@@ -117,11 +159,29 @@
             }
         });
     });
+    function editTransaksi(id) {
+        $.ajax({
+            url: `/Transaksi/uang-keluar/data/${id}`,
+            type: 'GET',
+            success: function (data) {
+                $('#editForm')
+                    .attr('action', `/Transaksi/uang-keluar/update/${data.id}`)
+                    .attr('method', 'POST');
+                    $('#edit_kategori').val(data.kategori_id);
+                    $('#edit_nama').val(data.nama_transaksi);
+                    $('#edit_jumlah').val(data.jumlah);
+                    $('#edit_tanggal').val(data.tanggal);
+                    $('#edit_keterangan').val(data.keterangan);
+                $('#editTransaksi').modal('show');
+            },
+            error: function () {
+                alert('Gagal mengambil data.');
+            }
+        });
+    }
 </script>
 @endpush
 @push('styles')
-<!-- DataTables CSS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 
 @endpush
 

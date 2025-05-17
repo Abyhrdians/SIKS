@@ -15,7 +15,7 @@ class KeuanganHelper
 
     public static function getTotalUangKeluar()
     {
-        return Transaksi_uang::where('jenis', 2)->sum('jumlah');
+        return Transaksi_uang::where('jenis', 0)->sum('jumlah');
     }
 
     public static function getTotalUangSekolah()

@@ -5,6 +5,46 @@
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
             <h3 class="fw-bold mb-3">Transaksi Uang Sekolah</h3>
         </div>
+          <div class="row">
+            <div class="col-sm-6 col-md-6">
+                <div class="card card-stats card-round">
+                    <div class="card-body ">
+                        <div class="row align-items-center">
+                            <div class="col-icon">
+                                <div class="icon-big text-center icon-primary bubble-shadow-small">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                            </div>
+                            <div class="col col-stats ms-3 ms-sm-0">
+                                <div class="numbers">
+                                    <p class="card-category">Total Keuangan</p>
+                                    <h4 class="card-title">RP {{ number_format($totalKeuangan, 0, ',', '.') }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-6">
+                <div class="card card-stats card-round">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-icon">
+                                <div class="icon-big text-center icon-info bubble-shadow-small">
+                                    <i class="fas fa-user-check"></i>
+                                </div>
+                            </div>
+                            <div class="col col-stats ms-3 ms-sm-0">
+                                <div class="numbers">
+                                    <p class="card-category">Uang Sekolah</p>
+                                    <h4 class="card-title">RP {{ number_format($uangSekolah, 0, ',', '.') }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-round">
@@ -23,10 +63,12 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Nama Transaksi</th>
-                                                <th>Kategori Transaksi</th>
-                                                <th>Transaksi Saldo</th>
-                                                <th>Tanggal Transkasi</th>
+                                                <th>Kode Transaksi</th>
+                                                <th>Tanggal</th>
+                                                <th>Nama Siswa</th>
+                                                <th>Kelas</th>
+                                                <th>Jumlah</th>
+                                                <th>Staff</th>
                                                 <th class="text-center">Aksi</th>
                                             </tr>
                                         </thead>

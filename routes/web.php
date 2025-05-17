@@ -52,7 +52,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
         Route::get('/Transaksi/uang-keluar',[Transaksi_UangKeluarController::class, 'index'])->name('admin.uangkeluar.index');
+        Route::post('/Transaksi/uang-keluar',[Transaksi_UangKeluarController::class, 'store'])->name('admin.uangkeluar.store');
+        Route::get('/Transaksi/uang-keluar/data/{id}',[Transaksi_UangKeluarController::class, 'data'])->name('admin.uangkeluar.data');
+        Route::put('/Transaksi/uang-keluar/update/{id}',[Transaksi_UangKeluarController::class, 'update'])->name('admin.uangkeluar.update');
+        Route::delete('/Transaksi/uang-keluar/delete/{id}',[Transaksi_UangKeluarController::class, 'destroy'])->name('admin.uangkeluar.destroy');
+
         Route::get('/Transaksi/uang-sekolah',[Transaksi_UangSekolahController::class, 'index'])->name('admin.uangsekolah.index');
+        Route::post('/Transaksi/uang-sekolah',[Transaksi_UangSekolahController::class, 'store'])->name('admin.uangsekolah.store');
+        Route::get('/Transaksi/uang-sekolah/data/{id}',[Transaksi_UangSekolahController::class, 'data'])->name('admin.uangsekolah.data');
+        Route::put('/Transaksi/uang-sekolah/update/{id}',[Transaksi_UangSekolahController::class, 'update'])->name('admin.uangsekolah.update');
+        Route::delete('/Transaksi/uang-sekolah/delete/{id}',[Transaksi_UangSekolahController::class, 'destroy'])->name('admin.uangsekolah.destroy');
     });
 
 

@@ -21,7 +21,7 @@
                             <div class="col col-stats ms-3 ms-sm-0">
                                 <div class="numbers">
                                     <p class="card-category">Total Keuangan</p>
-                                    <h4 class="card-title">RP 1.000.000</h4>
+                                    <h4 class="card-title">RP {{ number_format($totalKeuangan, 0, ',', '.') }}</h4>
                                 </div>
                             </div>
                         </div>
@@ -40,7 +40,7 @@
                             <div class="col col-stats ms-3 ms-sm-0">
                                 <div class="numbers">
                                     <p class="card-category">Uang Keluar</p>
-                                    <h4 class="card-title">RP 0</h4>
+                                    <h4 class="card-title">RP {{ number_format($UangKeluar, 0, ',', '.') }}</h4>
                                 </div>
                             </div>
                         </div>
@@ -59,7 +59,7 @@
                             <div class="col col-stats ms-3 ms-sm-0">
                                 <div class="numbers">
                                     <p class="card-category">Uang Masuk</p>
-                                    <h4 class="card-title">RP 1.000.000</h4>
+                                    <h4 class="card-title">RP {{ number_format($UangMasuk, 0, ',', '.') }}</h4>
                                 </div>
                             </div>
                         </div>
@@ -77,8 +77,8 @@
                             </div>
                             <div class="col col-stats ms-3 ms-sm-0">
                                 <div class="numbers">
-                                    <p class="card-category">Total Transaksi</p>
-                                    <h4 class="card-title">576</h4>
+                                    <p class="card-category">Uang Sekolah</p>
+                                    <h4 class="card-title">RP {{ number_format($uangSekolah, 0, ',', '.') }}</h4>
                                 </div>
                             </div>
                         </div>
@@ -91,16 +91,59 @@
                 <div class="card card-round">
                     <div class="card-header">
                         <div class="card-head-row card-tools-still-right">
-                            <h4 class="card-title">5 Transaksi Yang Terbaru</h4>
-                            <div class="card-tools">
-                                <button class="btn btn-icon btn-link btn-primary btn-xs"><span
-                                        class="fa fa-angle-down"></span></button>
-                                <button
-                                    class="btn btn-icon btn-link btn-primary btn-xs btn-refresh-card"><span
-                                        class="fa fa-sync-alt"></span></button>
-                                <button class="btn btn-icon btn-link btn-primary btn-xs"><span
-                                        class="fa fa-times"></span></button>
+                            <h4 class="card-title">10 Transaksi Uang Masuk/Keluar Terbaru</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive table-hover table-sales">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                            <th>No</th>
+                                            <th>Kode Transaksi</th>
+                                            <th>Tanggal</th>
+                                            <th>Kategori</th>
+                                            <th>Nama Transaksi</th>
+                                            <th>Jenis</th>
+                                            <th>Jumlah</th>
+                                            <th>Staff</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($transaksiUmum as $i => $trx)
+                                            <tr>
+                                                <td>{{ $i + 1 }}</td>
+                                                <td>{{ $trx->kode_transaksi }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($trx->tanggal)->format('d M Y') }}</td>
+                                                <td>{{ $trx->kategori->nama_kategori ?? '-' }}</td>
+                                                <td>{{ $trx->nama_transaksi }}</td>
+                                                <td>
+                                                    <span class="badge bg-{{ $trx->jenis == 1 ? 'success' : 'danger' }}">
+                                                        {{ $trx->jenis == 1 ? 'Uang Masuk' : 'Uang Keluar' }}
+                                                    </span>
+                                                </td>
+                                                <td>Rp {{ number_format($trx->jumlah, 0, ',', '.') }}</td>
+                                                <td>{{ $trx->user->name ?? '-' }}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <div class="row">
+            <div class="col-md-12">
+                <div class="card card-round">
+                    <div class="card-header">
+                        <div class="card-head-row card-tools-still-right">
+                            <h4 class="card-title">10 Transaksi Uang Sekolah</h4>
                         </div>
                     </div>
                     <div class="card-body">
@@ -111,70 +154,30 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Jenis Transaksi</th>
-                                                <th>Nama Transaksi</th>
-                                                <th>Kategori Transaksi</th>
-                                                <th>Transaksi Saldo</th>
-                                                <th>Tanggal Transkasi</th>
-                                                <th class="text-center">Tautan</th>
+                                                <th>Kode Transaksi</th>
+                                                <th>Tanggal</th>
+                                                <th>Nama Siswa</th>
+                                                <th>Kelas</th>
+                                                <th>Jumlah</th>
+                                                <th>Staff</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        @foreach($transaksiUangSekolah as $i => $trx)
                                             <tr>
-                                                <td>1</td>
-                                                <td>Uang Masuk</td>
-                                                <td>Donasi Pembangunan</td>
-                                                <td>Donasi</td>
-                                                <td>Rp 5.000.000</td>
-                                                <td>2025-04-10</td>
-                                                <td class="text-center"><a href="#">Lihat</a></td>
+                                                <td>{{ $i + 1 }}</td>
+                                                <td>{{ $trx->kode_transaksi }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($trx->tanggal_bayar)->format('d M Y') }}</td>
+                                                <td>{{ $trx->siswa->nama_siswa ?? '-' }}</td>
+                                                <td>{{ $trx->siswa->kelas ?? '-' }}</td>
+                                                <td>Rp {{ number_format($trx->jumlah_bayar, 0, ',', '.') }}</td>
+                                                <td>{{ $trx->user->name ?? '-' }}</td>
                                             </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Uang Keluar</td>
-                                                <td>Pembelian ATK</td>
-                                                <td>Operasional</td>
-                                                <td>Rp 750.000</td>
-                                                <td>2025-04-12</td>
-                                                <td class="text-center"><a href="#">Lihat</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Uang Sekolah</td>
-                                                <td>SPP Bulan April</td>
-                                                <td>SPP</td>
-                                                <td>Rp 350.000</td>
-                                                <td>2025-04-01</td>
-                                                <td class="text-center"><a href="#">Lihat</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>Uang Masuk</td>
-                                                <td>Pemasukan dari Kantin</td>
-                                                <td>Usaha Sekolah</td>
-                                                <td>Rp 2.000.000</td>
-                                                <td>2025-04-14</td>
-                                                <td class="text-center"><a href="#">Lihat</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td>Uang Keluar</td>
-                                                <td>Perbaikan AC Kelas</td>
-                                                <td>Perawatan</td>
-                                                <td>Rp 1.200.000</td>
-                                                <td>2025-04-09</td>
-                                                <td class="text-center"><a href="#">Lihat</a></td>
-                                            </tr>
+                                        @endforeach
                                         </tbody>
-
                                     </table>
                                 </div>
                             </div>
-                            {{-- <div class="col-md-6">
-                                <div class="mapcontainer">
-                                    <div id="world-map" class="w-100" style="height: 300px;"></div>
-                                </div>
-                            </div> --}}
                         </div>
                     </div>
                 </div>

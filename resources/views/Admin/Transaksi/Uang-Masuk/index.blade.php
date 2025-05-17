@@ -82,14 +82,15 @@
                                 <div class="table-responsive table-hover table-sales">
                                     <table class="table table-bordered table-striped"id="example">
                                         <thead>
-                                            <tr>
+                                             <tr>
                                                 <th>No</th>
                                                 <th>Kode Transaksi</th>
-                                                <th>Kategori Transaksi</th>
+                                                <th>Tanggal</th>
+                                                <th>Kategori</th>
                                                 <th>Nama Transaksi</th>
-                                                <th>Jumlah Transaksi</th>
-                                                <th>Tanggal Transkasi</th>
+                                                <th>Jumlah Rp.</th>
                                                 <th>Keterangan</th>
+                                                <th>Diinput oleh</th>
                                                 <th class="text-center">Aksi</th>
                                             </tr>
                                         </thead>
@@ -98,11 +99,12 @@
                                             <tr>
                                                 <td>{{$key + 1}}</td>
                                                 <td>{{$item->kode_transaksi}}</td>
+                                                <td>{{$item->tanggal}}</td>
                                                 <td>{{$item->kategori->nama_kategori}}</td>
                                                 <td>{{$item->nama_transaksi}}</td>
-                                                <td>RP {{ number_format($item->jumlah, 0, ',', '.') }}</td>
-                                                <td>{{$item->tanggal}}</td>
+                                                <td>{{ number_format($item->jumlah, 0, ',', '.') }}</td>
                                                 <td>{{$item->keterangan ?? '--'}}</td>
+                                                <td>{{$item->user->name}}</td>
                                                 <td>
                                                      <div class="btn-group">
                                                         <button type="button"

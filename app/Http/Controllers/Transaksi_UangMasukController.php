@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 class Transaksi_UangMasukController extends Controller
 {
     //
-     public function index(){
+    public function index(){
         $title = 'Hapus Data Transaksi Uang Masuk';
         $text = "Apakah Anda yakin ingin menghapus ini? ";
         confirmDelete($title, $text);
