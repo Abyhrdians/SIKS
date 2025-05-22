@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('transaksi_uangsekolah', function (Blueprint $table) {
         $table->id();
         $table->string('kode_transaksi')->unique();
-        $table->integer('bulan');
-        $table->integer('tahun');
+        $table->string('nama_pembayaran');
         $table->integer('jumlah_bayar');
         $table->date('tanggal_bayar');
         $table->string('keterangan')->nullable();

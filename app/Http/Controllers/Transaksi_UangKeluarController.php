@@ -60,7 +60,7 @@ class Transaksi_UangKeluarController extends Controller
 
     public function data($id){
         try {
-            $data = Transaksi_uang::with('kategori')->find($id);
+            $data = Transaksi_uang::with('kategori','user')->find($id);
             return response()->json($data);
         } catch (\Throwable $th) {
             return response()->json([

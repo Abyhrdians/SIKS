@@ -108,6 +108,11 @@
                                                 <td>
                                                      <div class="btn-group">
                                                         <button type="button"
+                                                        class="btn btn-info btn-sm"
+                                                        onclick="detailTransaksi({{ $item->id }})">
+                                                        Detail
+                                                        </button>
+                                                        <button type="button"
                                                         class="btn btn-warning btn-sm"
                                                         onclick="editTransaksi({{ $item->id }})">
                                                         Edit
@@ -134,6 +139,7 @@
 
 @include('Admin.Transaksi.Uang-Keluar.add')
 @include('Admin.Transaksi.Uang-Keluar.edit')
+@include('Admin.Transaksi.Uang-Keluar.detail')
 
 @push('scripts')
 <!-- jQuery & DataTables JS -->
@@ -179,6 +185,29 @@
             }
         });
     }
+
+   function detailTransaksi(id) {
+        $.ajax({
+            url: `/Transaksi/uang-keluar/data/${id}`,
+            type: 'GET',
+            success: function (data) {
+            $('#detailKode').text(data.kode_transaksi);
+            $('#detailTanggal').text(data.tanggal);
+            $('#detailKategori').text(data.kategori.nama_kategori);
+            $('#detailNama').text(data.nama_transaksi);
+            $('#detailJumlah').text('Rp ' + parseInt(data.jumlah).toLocaleString());
+            $('#detailKeterangan').text(data.keterangan);
+            $('#detailStaff').text(data.user.name);
+            $('#detailBukti').attr('src', '/storage/' + data.file_foto);
+            $('#detailModal').modal('show');
+            },
+            error: function () {
+                alert('Gagal mengambil data.');
+            }
+        });
+    }
+
+
 </script>
 @endpush
 @push('styles')

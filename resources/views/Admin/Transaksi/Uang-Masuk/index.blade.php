@@ -107,6 +107,7 @@
                                                 <td>{{$item->user->name}}</td>
                                                 <td>
                                                      <div class="btn-group">
+                                                        
                                                         <button type="button"
                                                         class="btn btn-warning btn-sm"
                                                         onclick="editTransaksi({{ $item->id }})">
@@ -179,6 +180,9 @@
             }
         });
     }
+
+
+
 </script>
 @endpush
 @push('styles')

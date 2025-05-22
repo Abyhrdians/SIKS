@@ -156,6 +156,7 @@
                                                 <th>No</th>
                                                 <th>Kode Transaksi</th>
                                                 <th>Tanggal</th>
+                                                <th>Kategori</th>
                                                 <th>Nama Siswa</th>
                                                 <th>Kelas</th>
                                                 <th>Jumlah</th>
@@ -168,6 +169,7 @@
                                                 <td>{{ $i + 1 }}</td>
                                                 <td>{{ $trx->kode_transaksi }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($trx->tanggal_bayar)->format('d M Y') }}</td>
+                                                <td>{{$trx->kategori->nama_kategori}}</td>
                                                 <td>{{ $trx->siswa->nama_siswa ?? '-' }}</td>
                                                 <td>{{ $trx->siswa->kelas ?? '-' }}</td>
                                                 <td>Rp {{ number_format($trx->jumlah_bayar, 0, ',', '.') }}</td>

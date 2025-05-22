@@ -9,14 +9,14 @@ class Transaksi_UangSekolah extends Model
     //
     protected $table = 'transaksi_uangsekolah';
     protected $fillable = [
-        'kode_traansaksi',
-        'bulan',
-        'tahun',
+        'kode_transaksi',
+        'nama_pembayaran',
         'jumlah_bayar',
         'tanggal_bayar',
         'keterangan',
         'id_user',
-        'id_kategori'
+        'id_kategori',
+        'id_siswa'
     ];
 
     public function user()
@@ -27,5 +27,9 @@ class Transaksi_UangSekolah extends Model
     public function kategori()
     {
         return $this->belongsTo(Kategori::class, 'id_kategori');
+    }
+    public function siswa()
+    {
+        return $this->belongsTo(Siswa::class, 'id_siswa');
     }
 }

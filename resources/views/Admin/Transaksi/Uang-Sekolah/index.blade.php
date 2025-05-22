@@ -50,9 +50,9 @@
                 <div class="card card-round">
                     <div class="card-header">
                         <div class="card-head-row card-tools-still-right">
-                            <div class="btn-group">
-                                <a href="" class="btn btn-primary">Tambah Transaksi</a>
-                            </div>
+                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTransaksi">
+                                Tambah Transaksi Sekolah
+                            </button>
                         </div>
                     </div>
                     <div class="card-body">
@@ -64,6 +64,7 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>Kode Transaksi</th>
+                                                <th>Nama Pembayaran</th>
                                                 <th>Tanggal</th>
                                                 <th>Nama Siswa</th>
                                                 <th>Kelas</th>
@@ -73,54 +74,34 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Donasi Pembangunan</td>
-                                                <td>Donasi</td>
-                                                <td>Rp 5.000.000</td>
-                                                <td>2025-04-10</td>
-                                                <td class="text-center"><a href="#">Lihat</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Pembelian ATK</td>
-                                                <td>Operasional</td>
-                                                <td>Rp 750.000</td>
-                                                <td>2025-04-12</td>
-                                                <td class="text-center"><a href="#">Lihat</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>SPP Bulan April</td>
-                                                <td>SPP</td>
-                                                <td>Rp 350.000</td>
-                                                <td>2025-04-01</td>
-                                                <td class="text-center"><a href="#">Lihat</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>Pemasukan dari Kantin</td>
-                                                <td>Usaha Sekolah</td>
-                                                <td>Rp 2.000.000</td>
-                                                <td>2025-04-14</td>
-                                                <td class="text-center"><a href="#">Lihat</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td>Perbaikan AC Kelas</td>
-                                                <td>Perawatan</td>
-                                                <td>Rp 1.200.000</td>
-                                                <td>2025-04-09</td>
-                                                <td class="text-center"><a href="#">Lihat</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>6</td>
-                                                <td>Perbaikan AC Kelas</td>
-                                                <td>Perawatan</td>
-                                                <td>Rp 1.200.000</td>
-                                                <td>2025-04-09</td>
-                                                <td class="text-center"><a href="#">Lihat</a></td>
-                                            </tr>
+                                       @foreach($data as $key => $item)
+                                       <tr>
+                                        <td>{{$key + 1 }}</td>
+                                        <td>{{$item->kode_transaksi}}</td>
+                                        <td>{{$item->nama_pembayaran}}</td>
+                                        <td>{{$item->tanggal_bayar}}</td>
+                                        <td>{{$item->siswa->nama_siswa}}</td>
+                                        <td>{{$item->siswa->kelas}}</td>
+                                        <td>
+                                            RP {{ number_format($item->jumlah_bayar, 0, ',', '.') }}
+                                        </td>
+                                        <td>{{$item->user->name}}</td>
+                                        <td class="text-center">
+                                            <div class="btn-group">
+                                                <button class="btn btn-sm btn-info" onclick="showDetail({{ $item->id }})">
+                                                <i class="bi bi-eye"></i>Detail
+                                                </button>
+                                                <button type="button"
+                                                        class="btn btn-warning btn-sm"
+                                                        onclick="editTransaksi({{ $item->id }})">
+                                                        Edit
+                                                </button>
+                                                    @method('DELETE')
+                                                <a href="{{route('admin.uangsekolah.destroy', $item->id)}}" class="btn btn-sm btn-danger" data-confirm-delete="true">Hapus</a>
+                                            </div>
+                                        </td>
+                                       </tr>
+                                       @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -134,11 +115,13 @@
 </div>
 @endsection
 
+
+@include('Admin.Transaksi.Uang-Sekolah.add')
+@include('Admin.Transaksi.Uang-Sekolah.edit')
+@include('Admin.Transaksi.Uang-Sekolah.detail')
+
 @push('scripts')
-<!-- jQuery & DataTables JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
 <script>
     $(document).ready(function () {
@@ -159,11 +142,164 @@
             }
         });
     });
+    $('#kelasSelect').on('change', function () {
+        var kelas = $(this).val();
+        $.ajax({
+            url: '/get-kelas/siswa/' + encodeURIComponent(kelas),
+            type: 'GET',
+            success: function (data) {
+                $('#siswaSelect').empty().append('<option selected disabled>Pilih Siswa</option>');
+                $.each(data, function (key, value) {
+                    $('#siswaSelect').append('<option value="' + value.id + '">' + value.nama_siswa + '</option>');
+                });
+            }
+        });
+    });
+    function editTransaksi(id) {
+        $.ajax({
+            url: `/Transaksi/uang-sekolah/data/${id}`,
+            type: 'GET',
+            success: function (data) {
+                $('#editForm')
+                    .attr('action', `/Transaksi/uang-sekolah/update/${data.id}`)
+                    .attr('method', 'POST');
+                    $('#edit_kategori').val(data.id_kategori);
+                    $('#edit_kelasSelect').val(data.siswa.kelas);
+                    $.ajax({
+                        url: '/get-kelas/siswa/' + encodeURIComponent(data.siswa.kelas),
+                        type: 'GET',
+                        success: function (siswaData) {
+                            $('#edit_siswaSelect').empty().append('<option selected disabled>Pilih Siswa</option>');
+                            $.each(siswaData, function (key, value) {
+                                let selected = value.id === data.siswa.id ? 'selected' : '';
+                                $('#edit_siswaSelect').append(`<option value="${value.id}" ${selected}>${value.nama_siswa}</option>`);
+                            });
+                        }
+                    });
+                    $('#edit_nama_transaksi').val(data.nama_pembayaran);
+                    $('#edit_jumlah_bayar').val(data.jumlah_bayar);
+                    $('#edit_tanggal_bayar').val(data.tanggal_bayar);
+                    $('#edit_keterangan').val(data.keterangan);
+
+                $('#editTransaksi').modal('show');
+            },
+            error: function () {
+                alert('Gagal mengambil data.');
+            }
+        });
+    }
+
+</script>
+
+
+<script>
+function showDetail(id) {
+    $.ajax({
+        url: `/Transaksi/uang-sekolah/data/${id}`,
+        type: 'GET',
+        success: function(data) {
+            // Format date
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = new Date(data.tanggal_bayar).toLocaleDateString('id-ID', options);
+
+            // Populate data
+            $('#detail_kodetransaksi').text(data.kode_transaksi);
+            $('#detail_kategori_pembayaran').text(data.kategori.nama_kategori);
+            $('#detail_nama_siswa').text(data.siswa.nama_siswa);
+            $('#detail_kelas').text(data.siswa.kelas);
+            $('#detail_nama_pembayaran').text(data.nama_pembayaran);
+            $('#detail_jumlah_bayar').text('Rp ' + parseInt(data.jumlah_bayar).toLocaleString('id-ID'));
+            $('#detail_tanggal_bayar').text(formattedDate);
+            $('#detail_petugas').text(data.user.name);
+            $('#detail_orang_tua_nama').text(data.siswa.orangtua.nama_ortu);
+            $('#detail_orang_tua_hp').text(formatPhoneNumber(data.siswa.orangtua.nomor_telp));
+
+            // Handle keterangan
+            if(data.keterangan && data.keterangan.trim() !== '' && data.keterangan !== '-') {
+                $('#detail_keterangan').text(data.keterangan).show();
+                $('#no-keterangan').hide();
+            } else {
+                $('#detail_keterangan').hide();
+                $('#no-keterangan').show();
+            }
+
+            $('#detailTransaksiModal').modal('show');
+        },
+        error: function() {
+            alert('Gagal memuat detail pembayaran.');
+        }
+    });
+}
+
+function formatPhoneNumber(phone) {
+    if (!phone) return '-';
+    return phone.replace(/(\d{4})(\d{4})(\d{4})/, '$1-$2-$3');
+}
 </script>
 @endpush
+
+
 @push('styles')
-<!-- DataTables CSS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+<style>
+    /* School-themed colors */
+    .bg-light-blue-gradient {
+        background: linear-gradient(135deg, #1a73e8 0%, #4285f4 100%);
+    }
+    .bg-green-gradient {
+        background: linear-gradient(135deg, #0b8043 0%, #34a853 100%);
+    }
+    .bg-purple-gradient {
+        background: linear-gradient(135deg, #8e24aa 0%, #ab47bc 100%);
+    }
+
+    /* Modern card styling */
+    .card {
+        border-radius: 0.5rem;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .card-header {
+        border-radius: 0.5rem 0.5rem 0 0 !important;
+    }
+
+    .info-item {
+        padding: 0.75rem;
+        background-color: #f8f9fa;
+        border-radius: 0.35rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .info-item label {
+        font-size: 0.8rem;
+        color: #6c757d;
+    }
+
+    .info-item p {
+        font-size: 1rem;
+    }
+
+    .transaction-summary {
+        background-color: #f8f9fa;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        border-left: 4px solid #1a73e8;
+    }
+
+    .school-brand {
+        border-left: 3px solid rgba(255,255,255,0.3);
+        padding-left: 1rem;
+    }
+
+    .modal-header .close {
+        opacity: 0.8;
+        transition: all 0.2s;
+    }
+
+    .modal-header .close:hover {
+        opacity: 1;
+    }
+</style>
 
 @endpush
 

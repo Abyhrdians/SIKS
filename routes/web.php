@@ -62,6 +62,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/Transaksi/uang-sekolah/data/{id}',[Transaksi_UangSekolahController::class, 'data'])->name('admin.uangsekolah.data');
         Route::put('/Transaksi/uang-sekolah/update/{id}',[Transaksi_UangSekolahController::class, 'update'])->name('admin.uangsekolah.update');
         Route::delete('/Transaksi/uang-sekolah/delete/{id}',[Transaksi_UangSekolahController::class, 'destroy'])->name('admin.uangsekolah.destroy');
+        Route::get('/get-kelas/siswa/{kelas}',[Transaksi_UangSekolahController::class, 'getkelas'])->name('admin.uangsekolah.getkelas');
     });
 
 
