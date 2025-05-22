@@ -25,7 +25,7 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Kode Kategori</th>
+
                                                 <th>Nama Kategori</th>
                                                 <th>Tipe</th>
                                                 <th>Keterangan</th>
@@ -36,7 +36,7 @@
                                         @foreach($data as $key => $item)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
-                                            <td>{{ $item->prefix_kode }}</td>
+
                                             <td>{{ $item->nama_kategori }}</td>
                                             <td>{{ ucfirst($item->tipe) }}</td>
                                             <td>{{ $item->deskripsi ?? '-' }}</td>
@@ -111,7 +111,7 @@
                     .attr('method', 'POST');
 
                 $('#edit_id').val(data.id);
-                $('#edit_kode_kategori').val(data.prefix_kode);
+                // $('#edit_kode_kategori').val(data.prefix_kode);
                 $('#edit_nama').val(data.nama_kategori);
                 $('#edit_tipe').val(data.tipe);
                 $('#edit_keterangan').val(data.deskripsi);

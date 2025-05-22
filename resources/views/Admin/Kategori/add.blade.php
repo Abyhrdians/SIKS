@@ -9,10 +9,7 @@
             <form action="{{ route('admin.kategori.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body px-4 py-3">
-                    <div class="mb-3">
-                        <label for="kode_kategori" class="form-label">Kode Kategori</label>
-                        <input type="text" class="form-control" id="kode_kategori" name="kode_kategori" placeholder="Contoh: AA">
-                    </div>
+
 
                     <div class="mb-3">
                         <label for="nama" class="form-label">Nama Kategori</label>

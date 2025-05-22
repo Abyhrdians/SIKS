@@ -20,7 +20,7 @@ class Kelola_KategoriController extends Controller
     {
         $validate = $request->validate([
             'nama' => 'required',
-            'kode_kategori' => 'required',
+
             'tipe' => 'required',
             'keterangan' => 'nullable',
         ]);
@@ -28,7 +28,7 @@ class Kelola_KategoriController extends Controller
         try {
             Kategori::create([
                 'nama_kategori' => $validate['nama'],
-                'prefix_kode' => $validate['kode_kategori'],
+
                 'tipe' => $validate['tipe'],
                 'deskripsi' => $validate['keterangan'],
             ]);
@@ -56,7 +56,7 @@ class Kelola_KategoriController extends Controller
     {
         $validate = $request->validate([
             'nama' => 'required',
-            'kode_kategori' => 'required',
+
             'tipe' => 'required',
             'keterangan' => 'nullable',
         ]);
@@ -66,7 +66,7 @@ class Kelola_KategoriController extends Controller
 
             $data->update([
                 'nama_kategori' => $validate['nama'],
-                'prefix_kode' => $validate['kode_kategori'],
+              
                 'tipe' => $validate['tipe'],
                 'deskripsi' => $validate['keterangan'],
             ]);
