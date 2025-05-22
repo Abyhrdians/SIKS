@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('kategori', function (Blueprint $table) {
         $table->id();
         $table->string('nama_kategori');
-        $table->integer('tipe');
+        $table->enum('tipe', ['uang_masuk', 'uang_keluar', 'uang_sekolah']);
         $table->string('deskripsi')->nullable();
         $table->timestamps();
         });
