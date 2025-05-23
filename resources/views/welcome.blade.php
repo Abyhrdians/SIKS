@@ -246,9 +246,9 @@
                 <div>
                     <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase">Hubungi Kami</h3>
                     <ul class="mt-4 space-y-4">
-                        <li class="text-base text-gray-400">support@sifis.example</li>
+                        <li class="text-base text-gray-400">MTsS Nur Rohmah Kota Bandung</li>
                         <li class="text-base text-gray-400">(021) 1234-5678</li>
-                        <li class="text-base text-gray-400">Jl. Pendidikan No. 123, Jakarta</li>
+                        <li class="text-base text-gray-400">Jl. Mengger Girang No.I No.39, Pasirluyu, Kec. Regol, Kota Bandung, Jawa Barat 40254</li>
                     </ul>
                 </div>
             </div>
