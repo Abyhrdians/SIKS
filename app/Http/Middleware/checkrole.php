@@ -17,12 +17,14 @@ class checkrole
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
 
-        if(!in_array(Auth::user()->role, $roles)){
-            abort(404);
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+        
+        $user = Auth::user();
+        if (!in_array($user->role, $roles)) {
+            abort(403);
         }
         return $next($request);
-
-
-
     }
 }

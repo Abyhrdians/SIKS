@@ -20,7 +20,7 @@
                 <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#"
                     aria-expanded="false">
                     <div class="avatar-sm">
-                        <img src="assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
+                        <img src="{{ Auth::user()->foto ? asset('storage/'.Auth::user()->foto) :  asset('assets/img/foto_default.png') }}" alt="..." class="avatar-img rounded-circle">
                     </div>
                     <span class="profile-username">
                         <span class="op-7">Hi,</span> <span class="fw-bold">{{auth()->user()->name}}</span>
@@ -30,7 +30,7 @@
                     <div class="dropdown-user-scroll scrollbar-outer">
                         <li>
                             <div class="user-box">
-                                <div class="avatar-lg"><img src="assets/img/profile.jpg"
+                                <div class="avatar-lg"><img src="{{ Auth::user()->foto ? asset('storage/'.Auth::user()->foto) :  asset('assets/img/foto_default.png') }}"
                                         alt="image profile" class="avatar-img rounded"></div>
                                 <div class="u-text">
                                     <h4>{{auth()->user()->name}}</h4>
@@ -39,7 +39,7 @@
                             </div>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="#">Profile Setting</a>
+                            <a class="dropdown-item" href="{{route('profile')}}">Profile Setting</a>
                             <div class="dropdown-divider"></div>
                             <form action="{{route('logout')}}" method="POST">
                                 @csrf

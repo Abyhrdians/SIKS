@@ -70,9 +70,11 @@
                     <div class="card-header">
                         <div class="card-head-row card-tools-still-right">
                             <div class="btn-group">
-                               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTransaksi">
+                            @if(Auth::user()->role == 1 || Auth::user()->role == 0)
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTransaksi">
                             Tambah Transaksi
                             </button>
+                            @endif
                             </div>
                         </div>
                     </div>
@@ -106,19 +108,21 @@
                                                 <td>{{$item->keterangan ?? '--'}}</td>
                                                 <td>{{$item->user->name}}</td>
                                                 <td>
-                                                     <div class="btn-group">
+                                                    <div class="btn-group">
                                                         <button type="button"
                                                         class="btn btn-info btn-sm"
                                                         onclick="detailTransaksi({{ $item->id }})">
                                                         Detail
                                                         </button>
-                                                        <button type="button"
-                                                        class="btn btn-warning btn-sm"
-                                                        onclick="editTransaksi({{ $item->id }})">
-                                                        Edit
-                                                        </button>
-                                                        @method('DELETE')
-                                                        <a href="{{route('admin.uangkeluar.destroy', $item->id)}}" class="btn btn-sm btn-danger" data-confirm-delete="true">Hapus</a>
+                                                        @if(Auth::user()->role == 1 || Auth::user()->role == 0)
+                                                            <button type="button"
+                                                            class="btn btn-warning btn-sm"
+                                                            onclick="editTransaksi({{ $item->id }})">
+                                                            Edit
+                                                            </button>
+                                                            @method('DELETE')
+                                                            <a href="{{route('admin.uangkeluar.destroy', $item->id)}}" class="btn btn-sm btn-danger" data-confirm-delete="true">Hapus</a>
+                                                        @endif
                                                     </div>
                                                 </td>
                                             </tr>

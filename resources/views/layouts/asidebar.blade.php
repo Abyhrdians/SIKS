@@ -32,31 +32,13 @@
                     </span>
                     <h4 class="text-section">Menu</h4>
                 </li>
-                @if(auth()->user()->role == 1)
-                <li class="nav-item {{ request()->is('dashboard*') ? 'active' : ''}}">
-                    <a href="{{route('staff.dashboard')}}">
+               <li class="nav-item {{ request()->is('dashboard*') ? 'active' : ''}}">
+                    <a href="{{route('dashboard')}}">
                         <i class="fas fa-home"></i>
                         <p>Dashboard</p>
                         {{-- <span class="badge badge-success">4</span> --}}
                     </a>
                 </li>
-                @elseif(auth()->user()->role == 2)
-                <li class="nav-item {{ request()->is('dashboard*') ? 'active' : ''}}">
-                    <a href="{{route('ks.dashboard')}}">
-                        <i class="fas fa-home"></i>
-                        <p>Dashboard</p>
-                        {{-- <span class="badge badge-success">4</span> --}}
-                    </a>
-                </li>
-                @elseif(auth()->user()->role == 0)
-                 <li class="nav-item {{ request()->is('dashboard*') ? 'active' : ''}}">
-                    <a href="{{route('admin.dashboard')}}">
-                        <i class="fas fa-home"></i>
-                        <p>Dashboard</p>
-                        {{-- <span class="badge badge-success">4</span> --}}
-                    </a>
-                </li>
-                @endif
                 <li class="nav-item {{ request()->is('Transaksi*') ? 'active' : ''}}">
                     <a data-bs-toggle="collapse" href="#base">
                         <i class="fas fa-folder-open"></i>
@@ -97,7 +79,8 @@
                         {{-- <span class="badge badge-success">4</span> --}}
                     </a>
                 </li>
-                @if(Auth::user()->role == 1)
+                
+                @if(Auth::user()->role == 0)
                 <li class="nav-section">
                     <span class="sidebar-mini-icon">
                         <i class="fa fa-ellipsis-h"></i>

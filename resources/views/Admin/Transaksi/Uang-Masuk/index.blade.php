@@ -69,11 +69,14 @@
                 <div class="card card-round">
                     <div class="card-header">
                         <div class="card-head-row card-tools-still-right">
+                            @if(Auth::user()->role == 1 || Auth::user()->role == 0)
                             <div class="btn-group">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTransaksi">
-                            Tambah Transaksi
-                            </button>
+                                Tambah Transaksi
+                                </button>
                             </div>
+                            @endif
+
                         </div>
                     </div>
                     <div class="card-body">
@@ -91,7 +94,9 @@
                                                 <th>Jumlah Rp.</th>
                                                 <th>Keterangan</th>
                                                 <th>Diinput oleh</th>
+                                                @if(Auth::user()->role == 1 || Auth::user()->role == 0)
                                                 <th class="text-center">Aksi</th>
+                                                @endif
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -105,9 +110,9 @@
                                                 <td>{{ number_format($item->jumlah, 0, ',', '.') }}</td>
                                                 <td>{{$item->keterangan ?? '--'}}</td>
                                                 <td>{{$item->user->name}}</td>
+                                                @if(Auth::user()->role == 1 || Auth::user()->role == 0)
                                                 <td>
                                                      <div class="btn-group">
-                                                        
                                                         <button type="button"
                                                         class="btn btn-warning btn-sm"
                                                         onclick="editTransaksi({{ $item->id }})">
@@ -117,6 +122,7 @@
                                                         <a href="{{route('admin.uangmasuk.destroy', $item->id)}}" class="btn btn-sm btn-danger" data-confirm-delete="true">Hapus</a>
                                                     </div>
                                                 </td>
+                                                @endif
                                             </tr>
                                         @endforeach
                                         </tbody>

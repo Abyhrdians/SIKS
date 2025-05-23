@@ -8,6 +8,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-round">
+                    @if(Auth::user()->role == 1 || Auth::user()->role == 0)
                     <div class="card-header">
                         <div class="card-head-row card-tools-still-right">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSiswa">
@@ -15,6 +16,7 @@
                             </button>
                         </div>
                     </div>
+                    @endif
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
@@ -38,23 +40,23 @@
                                                 <td>{{$item->kelas}}</td>
                                                 <td>{{$item->orangtua->nama_ortu}}</td>
                                                 <td>{{$item->orangtua->nomor_telp}}</td>
-                                                <td>
-
+                                                <td class="text-center">
                                                     <div class="btn-group">
                                                         <button type="button"
                                                         class="btn btn-info btn-sm"
                                                         onclick="detailSiswa({{ $item->id }})">
                                                         Detail
                                                         </button>
-                                                        <button type="button"
-                                                        class="btn btn-warning btn-sm"
-                                                        onclick="editSiswa({{ $item->id }})">
-                                                        Edit
-                                                        </button>
+                                                        @if(Auth::user()->role == 1 || Auth::user()->role == 0)
+                                                            <button type="button"
+                                                            class="btn btn-warning btn-sm"
+                                                            onclick="editSiswa({{ $item->id }})">
+                                                            Edit
+                                                            </button>
                                                         @method('DELETE')
                                                         <a href="{{route('admin.kelola-siswa.destroy', $item->id)}}" class="btn btn-sm btn-danger" data-confirm-delete="true">Hapus</a>
+                                                        @endif
                                                     </div>
-
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -207,11 +209,9 @@
         }
     });
 }
-
 </script>
 @endpush
 @push('styles')
-<!-- DataTables CSS -->
 
 @endpush
 

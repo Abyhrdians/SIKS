@@ -91,13 +91,15 @@
                                                 <button class="btn btn-sm btn-info" onclick="showDetail({{ $item->id }})">
                                                 <i class="bi bi-eye"></i>Detail
                                                 </button>
-                                                <button type="button"
-                                                        class="btn btn-warning btn-sm"
-                                                        onclick="editTransaksi({{ $item->id }})">
-                                                        Edit
-                                                </button>
-                                                    @method('DELETE')
-                                                <a href="{{route('admin.uangsekolah.destroy', $item->id)}}" class="btn btn-sm btn-danger" data-confirm-delete="true">Hapus</a>
+                                                @if(Auth::user()->role == 1 || Auth::user()->role == 0)
+                                                    <button type="button"
+                                                            class="btn btn-warning btn-sm"
+                                                            onclick="editTransaksi({{ $item->id }})">
+                                                            Edit
+                                                    </button>
+                                                        @method('DELETE')
+                                                    <a href="{{route('admin.uangsekolah.destroy', $item->id)}}" class="btn btn-sm btn-danger" data-confirm-delete="true">Hapus</a>
+                                                @endif
                                             </div>
                                         </td>
                                        </tr>
@@ -180,7 +182,6 @@
                     $('#edit_jumlah_bayar').val(data.jumlah_bayar);
                     $('#edit_tanggal_bayar').val(data.tanggal_bayar);
                     $('#edit_keterangan').val(data.keterangan);
-
                 $('#editTransaksi').modal('show');
             },
             error: function () {
@@ -188,7 +189,6 @@
             }
         });
     }
-
 </script>
 
 
